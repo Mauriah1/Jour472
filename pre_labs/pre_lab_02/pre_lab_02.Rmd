@@ -362,4 +362,4 @@ Now that you have seen how to use mutate, filtering and dates, give me three que
 ```
 1.  When filtering with data, what is the most common filter to filter by?
 
-2.   When looking at a department and you want to find out how many seats that department has in one room compared to how many seats is token the entire year, what is the correct explanation when doing this?
+2.   When looking at a department and you want to find out how many seats that department has in one room compared to how many seats is token the entire year, what is the correct explanation when explaining this?
