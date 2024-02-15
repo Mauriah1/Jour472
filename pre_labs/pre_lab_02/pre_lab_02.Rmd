@@ -91,7 +91,7 @@ And now we only have two columns of data for whatever analysis we might want to 
 
 Notice that we made a new variable to hold the result. Why is that important?
 
-**Answer**
+**Answer : We are storing it in a new variable so we wont loose the original data.**
 
 ### Task 6: Combining filters
 
@@ -125,7 +125,7 @@ and_theatre_seats_15 <- umd_courses |> filter(department == "Theatre" | seats >=
 nrow(and_theatre_seats_15)
 ```
 
-**Answer**
+**Answer : 231 is how many seats are in the theater and 41011 is how many seats the theater department has had in that year.**
 
 When it comes to filters, OR is additive; AND is restrictive.
 
@@ -204,7 +204,7 @@ So the month of June 2022 had the most expenditures by far in this data.
 
 Describe the values in the new `month` column - what do you think is going on there?
 
-**Answer**
+**Answer: converting all the dates of the month into the smallest number of that month who has data.**
 
 ### Task 10: Mutate
 
@@ -234,7 +234,7 @@ general_22 <- general_22 |>
 
 Describe what you think this code is doing below.
 
-**Answer**
+**Answer: We are opening up the data and then mutating. We are taking the total votes for all the campaigners and then taking the percent of Moore's votes and comparing.**
 
 ### Task 11: Better percentage calculation
 
@@ -355,8 +355,11 @@ Now that you have seen how to use mutate, filtering and dates, give me three que
 
 **Answer**
 
-1.  
+1.  Would mutating be a better tool than just summing?
 
-2.  
+```{=html}
+<!-- -->
+```
+1.  When filtering with data, what is the most common filter to filter by?
 
-3.  
+2.   When looking at a department and you want to find out how many seats that department has in one room compared to how many seats is token the entire year, what is the correct explanation when doing this?
