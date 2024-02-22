@@ -282,6 +282,6 @@ cleaned_md_grants_loans
 cleaned_md_grants_loans |>
   filter(str_detect(source,'MARYLAND TOURISM BOARD')) |> 
   group_by(zip5) |>
-  summarise(total_amount = sum(amount)) |>
-  arrange(desc(total_amount))
+  summarise(amount = sum(amount)) |>
+  arrange(desc(amount))
 ```
