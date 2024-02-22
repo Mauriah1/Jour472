@@ -78,7 +78,7 @@ umd_capital <- payments |>
 
 Q4: You want to understand how much state grant money went to stem cell research projects each fiscal year. Search the data to find grants that fit that description. Once you find which columns contain the information you want, your code should standardize the data needed to find just the grants for stem cell research in a single filter. Then create a total amount of money for each fiscal year. Write a sentence summarizing how stem cell research funding has changed over time.
 
-A4: **Stem cell research funding has changed over time by decreasing a lot by 2009 and fluctuating between 7,000,000, 8,000,000, and 9,000,000 for the following years leading up to 2020.**
+A4: **Stem cell research funding has changed over time by decreasing a lot by 2009 and fluctuating between 7,000,000, 8,000,000, and 9,000,000 for the following years leading up to 2020**
 
 ```{r}
 md_grants_loans |>
