@@ -1,0 +1,133 @@
+---
+title: "Reverse Engineering Project"
+author: "Mauriah"
+date: ""
+output:
+  html_document:
+    theme: cerulean
+    highlight: pygments
+    toc: true
+    toc_float:
+      collapsed: true
+      smooth_scroll: false
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Introduction
+
+In this notebook, we are reverse engineering the story, [STORY NAME](STORY%20URL)
+
+## Load libraries
+
+Loading required libraries for this analysis.
+
+```{r echo=FALSE, message=FALSE}
+# Turn off scientific notation
+options(scipen=999)
+library(tidyverse)
+library(lubridate)
+library(janitor)
+```
+
+## Load and Cleaning Data
+
+In this section, describe the source of the data, write a basic data dictionary for data you are working with, and discuss any caveats or issues you discovered working with this data.
+
+```{r}
+# Load required data
+pop_age <- read_csv("data/population-by-age.csv")|>
+  clean_names()
+public_enrollment <- read_csv("data/public-enrollment-by-grade.csv")|>
+  clean_names() 
+private_enrollment <- read_csv("data/private-enrollment-by-grade.csv")|>
+  clean_names()
+# Path to data should be loaded from folder "data" i.e. read_csv("data/name_of_data.csv")
+
+# Clean required data and prepare for analysis if needed. 
+
+
+```
+
+## Sentences to Engineer
+
+In this notebook, we are reverse engineering five sentences from the story.
+
+### Sentence 1
+
+-   **Sentence text**: Public school enrollment plunged during the pandemic. Our analysis shows where the students went. In the 21 states where data was available, enrollment fell by about 700,000 students between the 2019-2020 and 2021-2022 school years.
+-   **Analysis summary**:
+
+```{r}
+public_enrollment |>
+  filter(enrollment >=0) |>
+  group_by(sch_year) |>
+  summarize(pub_enrollment = sum(enrollment)) 
+
+
+```
+
+### Sentence 2
+
+-   **Sentence text**: That leaves an estimated 230,000 students still accounted for in the data.
+-   **Analysis summary**: When looking at the population by school age, from Fall 2021 to Spring 2020, we can see a 238,000 population decrease. This confirms their finding but originally it did not seem that this data set would be the best to showcase this change of school-aged students who may be unaccounted for. The data does not specifically say all of these students are not enrolled in school, so it remains somewhat unclear if it is best for showing their findings.
+
+```{r}
+pop_age |>
+  group_by(est_date) |>
+  summarise(school_age_pop = sum(population))
+
+
+```
+
+### Sentence 3
+
+-   **Sentence text**: California alone showed over 150,000 missing students in the data, and New York had nearly 60,000.
+-   **Analysis summary**: In my analysis, I came to the conclusion that in my updated version of the data, California shows 541,856 missing students from the 2019-2020 school year to the 2021-2022 school year. New York shows 264,796 missing students from these school years in the updated data.
+
+```{r}
+public_enrollment |>
+  filter(state == 'CALIFORNIA') |>
+  group_by(sch_year) |>
+    summarize(total_enrollment = sum(enrollment)) |>
+  summarize(enrollment_change = ((max(total_enrollment)) - (min(total_enrollment))))
+
+public_enrollment |>
+  filter(state == 'NEW YORK') |>
+  group_by(sch_year) |>
+    summarize(total_enrollment = sum(enrollment)) |>
+  summarize(enrollment_change = ((max(total_enrollment)) - (min(total_enrollment))))
+
+```
+
+### Sentence 4
+
+-   **Sentence text**: The analysis doesn’t include data from 29 states, including Texas and Illinois, or the unknown numbers of ghost students who are technically enrolled but rarely make it to class.
+-   **Analysis summary**: In my analysis, I could not find evidence that supported the statement. When I located all the states who provided data, Texas and Illinois were included in my data findings. 
+
+```{r}
+
+all_states <- pop_age|>
+  group_by(state) |> 
+summarise(
+    count_state=n()
+  ) |>
+  arrange(desc(count_state))
+
+```
+
+### Sentence 5
+
+-   **Sentence text**: [Paste in sentence to engineer here]
+-   **Analysis summary**: [Write up two to three sentences describing the results of your analysis. Were you able to confirm the finding? If not, why not?]
+
+```{r}
+# Put code to reverse engineer sentence here
+
+# Display results of code below this codeblock
+
+```
+
+-30-
