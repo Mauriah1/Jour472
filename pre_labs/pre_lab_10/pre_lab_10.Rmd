@@ -364,7 +364,7 @@ So let's change the color scale to a "log" scale, which will help us see those d
 
 ### Task: Run code
 
-**Task** Run the following code. Describe the output in the space below. What regional patterns do you see? **Answer**
+**Task** Run the following code. Describe the output in the space below. What regional patterns do you see? **Answer: The rural places have higher rates, while the more city places have lower rates.**
 
 ```{r}
 ggplot() +
