@@ -1,0 +1,158 @@
+---
+title: "Data Analysis Project"
+author: "Mauriah Allen"
+date: "4-23-24"
+output:
+  html_document:
+    theme: cerulean
+    highlight: pygments
+    toc: true
+    toc_float:
+      collapsed: true
+      smooth_scroll: false
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Introduction
+
+In this notebook, we are checking out the story, [STORY NAME](STORY%20URL)
+
+## Load libraries
+
+Loading required libraries for this analysis.
+
+```{r echo=FALSE, message=FALSE}
+# Turn off scientific notation
+options(scipen=999)
+library(tidyverse)
+library(lubridate)
+library(janitor)
+```
+
+## Load and Cleaning Data
+
+In this section, describe the source of the data, write a basic data dictionary for data you are working with, and discuss any caveats or issues you discovered working with this data.
+
+```{r}
+# Load required data
+wbb_2022 <- read_csv("data/wbb_rosters_2022_23.csv") |> clean_names() 
+
+wbb_2023 <-read_csv("data/wbb_rosters_2023_24.csv")|> clean_names() 
+
+wbb_2021 <-read_csv("data/wbb_rosters_2021_22.csv")|> clean_names()
+
+wbb_2020 <- read_csv("data/wbb_rosters_2020_21.csv")|> clean_names()
+
+wbb_crosswalk <- read_csv("data/wbb_rosters23_crosswalk.csv") |> clean_names()
+
+# Path to data should be loaded from folder "data" i.e. read_csv("data/name_of_data.csv")
+
+# Clean required data and prepare for analysis if needed. 
+
+
+```
+
+## Sentences to Engineer
+
+In this notebook, we are reverse engineering five sentences from the story.
+
+### Sentence 1
+
+-   **Sentence text**: What is the average height of the athletes in each year from the rosters 2020-2023, which year had the tallest average
+-   **Analysis summary**: #so far 2020 has the highest average height so far at the years with the height of 6.8
+
+```{r}
+# Put code to reverse engineer sentence here
+wbb_2020_height_per_town <- wbb_2020 |> 
+group_by(hometown_clean) |> summarise(Avg_height_per_town = mean(total_inches)) |> arrange(desc(Avg_height_per_town)) |> mutate(feet = Avg_height_per_town/12)
+
+#still needs 2021, because we need to mutate a coloumn for the total inches. 
+
+
+wbb_2022_height_per_town <- wbb_2022 |> 
+group_by(hometown) |> summarise(Avg_height_per_town = mean(total_inches)) |> arrange(desc(Avg_height_per_town)) |> mutate(feet = Avg_height_per_town/12)
+
+wbb_2023_height_per_town <- wbb_2023 |> 
+group_by(hometown) |> summarise(Avg_height_per_town = mean(total_inches)) |> arrange(desc(Avg_height_per_town)) |> mutate(feet = Avg_height_per_town/12)
+
+
+# Display results of code below this codeblock
+
+```
+
+### Sentence 2
+
+-   **Sentence text**: How does the quanity of the position of a Forward change over the years?
+-   **Analysis summary**: [Write up two to three sentences describing the results of your analysis. Were you able to confirm the finding? If not, why not?]
+
+```{r}
+# Put code to reverse engineer sentence here
+
+# Display results of code below this codeblock
+wbb_positions_2020 <- wbb_2020 |> 
+    group_by(position_clean) |> 
+    summarise(count = n())
+
+wbb_positions_2021 <- wbb_2021 |> 
+    group_by(position_clean) |> 
+    summarise(count = n())
+
+wbb_positions_2022 <- wbb_2022 |> 
+    group_by(position_clean) |> 
+    summarise(count = n())
+
+wbb_positions_2023 <- wbb_2023 |> 
+    group_by(position_clean) |> 
+    summarise(count = n())
+
+```
+
+### Sentence 3
+
+-   **Sentence text**: In the years 2022 and 2023, how many teams had more than 1 redshirt on their team? What team had the most, and where are they from?
+-   **Analysis summary**: [Write up two to three sentences describing the results of your analysis. Were you able to confirm the finding? If not, why not?]
+
+```{r}
+# Put code to reverse engineer sentence here
+redshirt_22 <- wbb_2022 |>
+  group_by(team, team_state) |> 
+  summarise(redshirt_numbers = sum(redshirt)) |> arrange(desc(redshirt_numbers)) |> 
+  filter(redshirt_numbers > 1) 
+
+redshirt_23 <- wbb_2023 |>
+  group_by(team, team_state) |> 
+  summarise(redshirt_count = sum(redshirt)) |> arrange(desc(redshirt_count)) |> 
+  filter(redshirt_count > 1)
+
+# Display results of code below this codeblock
+
+```
+
+### Sentence 4
+
+-   **Sentence text**: How many players are from DMV each year, does the number increase or decrease or fluncuates?
+-   **Analysis summary**: [Write up two to three sentences describing the results of your analysis. Were you able to confirm the finding? If not, why not?]
+
+```{r}
+# Put code to reverse engineer sentence here
+
+# Display results of code below this codeblock
+
+```
+
+### Sentence 5
+
+-   **Sentence text**: [Paste in sentence to engineer here]
+-   **Analysis summary**: [Write up two to three sentences describing the results of your analysis. Were you able to confirm the finding? If not, why not?]
+
+```{r}
+# Put code to reverse engineer sentence here
+
+# Display results of code below this codeblock
+
+```
+
+-30-
