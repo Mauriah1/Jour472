@@ -80,13 +80,23 @@ Finally, tell me what questions you could ask of this data. Be creative.
 **A3**
 
 ```{r}
-press_releases_url <- "https://www.cardin.senate.gov/?post_type=press-releases"
+press_releases_url <- "https://www.cardin.senate.gov/?post_type=press-releases."
 
-results_3 <- press_releases_url |> 
-  read_html()
+dates <- press_releases_url |> 
+  html_element('h5')|> 
+  html_text()|>
+  as_tibble()
 
-press_results_2 <- results_3 |> html_elements('list-press-releases time')|> html_text() |>
-  as_tibble() |> separate(value, c('date', 'title'), sep=":") |> drop_na(title)|> mutate(title = str_squish(title), date = mdy(date))
+
+titles <- press_releases_url |> 
+  html_element('h3 a') |>
+  html_text() |>
+  as_tibble()
+
+urls <- press_releases_url |>
+  html_element('h3 a') |>
+  html_attr('href') |>
+  as_tibble()
 
 
 
