@@ -58,7 +58,7 @@ maryland_population <- read_csv('data/maryland_population_2020.csv')
 **Task** Run the following code to join Maryland population data and the 2022 voter registration data together using the common column county as the key. How many rows are there now? How many *should* there be? **Answer: there are 24 rows, but there is only 23 counties.**
 
 ```{r}
-maryland_population_with_voters <- maryland_population |> left_join(county_voters_2022, join_by("COUNTY"))
+maryland_population_with_voters <- maryland_population |> left_join(county_voters_2022, join_by("GE"))
 ```
 
 By default, `dplyr` will do a "natural" join, where it'll match all the matching columns in both tables. So if we take out the `join_by()`, it'll use all the common columns between the tables. That may not be right in every instance but let's try it. If it works, we should get 24 rows.
